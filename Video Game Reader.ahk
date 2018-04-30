@@ -329,7 +329,7 @@ Translation_GUI_ShellEmbedded_1(_GUI, _control, _type:="") {
 Translation_GUI_DropDownListX(_GUI, _control) {
 _source := _GUI.controls["DropDownList_1"].get(), _target := _GUI.controls["DropDownList_2"].get()
 Translation.setDicSysName(_source, _target)
-_layout := Keypad.keyboard.layout, Keypad.setLayout(VGR.base.Localization.localizations[_source].data.language.code)
+_layout := Keypad._keyboard.layout, Keypad.setLayout(VGR.base.Localization.localizations[_source].data.language.code)
 if (ErrorLevel)
 	Keypad.setLayout(_layout)
 Keypad.GUI.activate()
