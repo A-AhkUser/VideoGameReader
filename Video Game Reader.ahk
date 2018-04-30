@@ -54,12 +54,6 @@ VGR :=
 		SETTINGS_FILE: A_ScriptDir . "\settings.json",
 		settings: "",
 		updateSettings: "VGR_updateSettings",
-		hotkeys: {
-			keyboard: {},
-			_keyboard: {},
-			joystick: {},
-			_joystick: {}
-		},
 		setHotkeys: "VGR_setHotkeys",
 		UI: {
 			localization: "",
@@ -629,5 +623,5 @@ Keypad.jInputOnConnection := Func("Keypad_JInput_onConnection")
 Keypad.jInputOnDisconnected := Func("Keypad_JInput_onDisconnected")
 }
 Emulation_customize() {
-Emulation.onClose := Func("Emulation_closeEvent")
+; Emulation.onClose := Func("Emulation_closeEvent")
 }
