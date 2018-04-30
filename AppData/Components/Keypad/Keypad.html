@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><meta charset="utf-8" />
+	<title>Keypad</title>
+		<style>
+		body {
+			background-color: #000000;
+		}
+		button.key {
+			border-bottom-right-radius: 9px;
+			border-left-color: #333333;
+			border-top-color: #333333;
+			border-right-color: #555555;
+			border-bottom-color: #444444;
+			text-align: center;
+			background-color: #111111;
+			font-family: Segoe UI;
+			font-size: 14px;
+			color: #EA72C0;
+		}
+		button.key:focus {
+			background-color: #333333;
+		}
+
+		.autocomplete {
+		background-color: #000000;
+		}
+		#input {
+			font-family: Segoe UI;
+			font-size: 14px;
+			color: #FFFFFF;
+		}
+		#menu {
+			font-family: Segoe UI;
+			font-size: 9px;
+			color: #666666;
+		}
+		</style>
+	</head>
+		<body>
+		<script>
+		(Keyboard = function() {
+
+			var _HTMLElement = document.createElement("ul");
+			_HTMLElement.id = "keyboard", _HTMLElement.style["list-style"] = "none", _HTMLElement.style.margin = 0, _HTMLElement.style.padding = 0;
+			document.body.appendChild(_HTMLElement);
+
+			var _styles = document.createElement("style");
+			_styles.type = "text/css", _styles.innerText = "button.key {} button.key:focus {outline: none;}";
+			document.head.appendChild(_styles);
+
+			var _cssRules = document.styleSheets[0].cssRules;
+			var _i, _cssRule, _width, _height;
+
+			for (_i = 0; _i < _cssRules.length; _i += 1) {
+				_cssRule = _cssRules[_i];
+				if (_cssRule.selectorText == "button.key") {
+					var _width = _cssRule.style.getPropertyValue("width");
+					var _height = _cssRule.style.getPropertyValue("height");
+				break;
+				}
+			}
+			_width = _width || 31, _height = _height || 31;
+
+
+			Keyboard = {
+
+				HTMLElement: _HTMLElement,
+				_styles: _styles,
+				keymaps: $,
+				grid: {columns: {current: 0, maxIndex: 0}, rows: {current: 0, maxIndex: 0}},
+				buttons: {
+					HTMLCollection: _HTMLElement.getElementsByClassName("key"),
+					wDesired: _width,
+					hDesired: _height
+				},
+				get layouts() {
+				return Object.keys(this.keymaps);
+				},
+				layout: "",
+				layer: "",
+				sendParam: 0,
+				getButton: function(_row, _column) {
+				return this.buttons.HTMLCollection[(_row * this.grid.columns.maxIndex) + _column];
+				},
+				buttonsShiftFocus: function(_axis, _δ) {
+
+					var _grid = this.grid, _axis = _grid[_axis], _x = _axis.current + _δ, _n = _axis.maxIndex - 1;
+
+					_axis.current = (_x < 0) ? _n : (_x > _n) ? 0 : _axis.current + _δ;
+					this.getButton(_grid.rows.current, _grid.columns.current).focus();
+
+				},
+				setLayout: function(_layout) {
+
+					_layout = _layout.toLowerCase();
+					if (!(this.layouts.indexOf(_layout) > -1))
+				return -1;
+					if (_layout == this.layout)
+				return 0;
+
+					var _charSet = this.keymaps[_layout][0], _row;
+					var _str = "", _i, _l = _charSet.length;
+					var _n;
+
+					for (_i = 0; _i < _l; _i += 1) {
+						_row = _charSet[_i];
+						_str += "<div class='row'>", _row.forEach(function (_item, _index) {
+							if (_item.hasOwnProperty("letterpress"))
+								_innerText = _item.letterpress;
+							else if (_item != "")
+								_innerText = _item;
+							else _innerText = (_row[_index]={letterpress: "​", value: " "}).letterpress;
+								_str += "<button class='key'>" + _innerText + "</button>";
+						}), _str += "</div>";
+					}
+					this.HTMLElement.innerHTML = _str;
+					this.grid.rows.maxIndex = _l, this.grid.columns.maxIndex = _n = _row.length, this.grid.rows.current = this.grid.columns.current = 0;
+					this.layout = _layout, this.layer = 0, this.sendParam = 0;
+
+					var _oStyle = this._styles.sheet.cssRules[0].style;
+					_oStyle.width = 100/_n + "%", _oStyle.height = (100/_l) - 4 + "vh";
+					this.getButton(0, 0).focus();
+
+				return 1;
+				},
+				setLayer: function(_layer) {
+
+					var _layout = this.keymaps[ this.layout ];
+					var _l = _layout.length;
+
+					if (!((0 <= _layer) && (_layer < _l)))
+				return false;
+
+					var _charSet = _layout[_layer], _row;
+
+						for (var _i = 0; _i < _charSet.length; _i += 1) {
+							_row = _charSet[_i], _row.forEach(function (_item, _index) {
+								if (_item.hasOwnProperty("letterpress"))
+									this[_index].innerText = _item.letterpress;
+								else if (_item != "")
+									this[_index].innerText = _item;
+								else this[_index].innerText =  (_row[_index]={letterpress: "​", value: " "}).letterpress;
+							}, this.HTMLElement.getElementsByClassName("row")[_i].children);
+						}
+						this.layer = _layer;
+
+				return true;
+				}
+
+			};
+
+		})();
+		</script>
+		</body>
+</html>

@@ -1,0 +1,112 @@
+﻿{
+    "language": {
+        "name": "english",
+        "nativeName": "english",
+        "code": "en"
+    },
+    "author": "A_AhkUser",
+    "TrayMenu": {
+        "Tray": [
+            "&About",
+            null,
+            "&Play",
+            "&Emulation",
+            "&Hotkeys",
+            "&Language",
+            "E&xit"
+        ],
+        "Tray#InputDevices": [
+            "&keyboard",
+            "&gamepad"
+        ]
+    },
+    "UI.Reader_UI": {
+        "controls": {
+            "Tab_1": "Translation|Game guide"
+        }
+    },
+    "UI.About_UI": {
+        "title": "About $",
+        "controls": {
+            "version": "Version",
+            "website": "Website",
+            "contact": "Contact"
+        }
+    },
+    "UI.Play_UI": {
+        "title": "Video Game Reader",
+        "controls": {
+            "gameTitle": "Enter or select a game title...",
+            "delete": "&delete",
+            "create": "&create",
+            "modify": [
+                "&modify",
+                "&save"
+            ],
+            "platform": "platform",
+            "emulator": "emulator",
+            "dictionary": "dictionary",
+            "language": "game language",
+            "gamePath": "file path (game)",
+            "gameGuidePath": "file path (game guide) [optional]",
+            "play": "&play"
+        },
+        "OwnDialogs": {
+            "INVALID_ALPHANUMERIC_STRING": "The game title must contain only alphanumeric\r\ncharacters ([A-Za-z0-9]) and spaces.",
+            "ERASURE_CONFIRMATION_PROMPT": "Are you sure you want to delete $ ?",
+            "PLATFORM_NOT_SPECIFIED": "Please select first a platform for the game.",
+            "FILE_SELECT_SELECT_GAME": "Select a game",
+            "FILE_SELECT_SELECT_GAME_GUIDE": "Select a game guide",
+            "SHELL_EMBEDDED_CANNOT_OPEN_PDF_FILES": "Foxit Reader is not installed or has not been set up to display pdf files in an embedded browser."
+        }
+    },
+    "UI.Emulation_UI": {
+        "title": "Emulation",
+        "controls": {
+            "platform": "platform",
+            "emulator": "emulator",
+            "cancel": "&cancel",
+            "confirm": "&OK"
+        },
+        "OwnDialogs": {
+            "FILE_SELECT_SELECT_EMULATOR_EXE": "Select an emulator",
+            "DISMISS_CONFIRMATION_PROMPT": "Cancel without saving current changes ?"
+        }
+    },
+    "UI.Hotkeys_UI": {
+        "title": "Hotkeys",
+        "controls": {
+            "displayEvent": "show/hide the visual keyboard",
+            "getGameGuide": "display the game guide",
+            "submitEvent": "translate highlighted text (dictionary)\r\ntranslate entered text (visual keyboard)",
+            "inputSendBackSpace": "resume game (dictionary)\r\nbackspace key (visual keyboard)",
+            "autocompleteAutocompletion": "end the word with a suggestion (predictive text input)",
+            "autocompleteMenuSet_U": "decrease window transparency (dictionary)\r\nselect the previous suggestion (predictive text input)",
+            "autocompleteMenuSet_D": "increase window transparency (dictionary)\r\nselect the next suggestion (predictive text input)",
+            "inputShiftCaretPosition_L": "shift the caret position from right to left (visual keyboard)",
+            "inputShiftCaretPosition_R": "shift the caret position from left to right (visual keyboard)",
+            "inputSendSpace": "insert a space character (visual keyboard)",
+            "keyPressEvent": "press the key currently focused (visual keyboard)\r\n[gamepad only] left mouse button",
+            "directionalEvent_L": "navigate through visual keyboard keys (left)",
+            "directionalEvent_U": "navigate through visual keyboard keys (up)",
+            "directionalEvent_R": "navigate through visual keyboard keys (right)",
+            "directionalEvent_D": "navigate through visual keyboard keys (down)",
+            "thumbstickEvent_L": "move the visual keyboard window",
+            "thumbstickEvent_R": "move the mouse cursor",
+            "cancel": "cancel",
+            "confirm": "OK"
+        },
+        "OwnDialogs": {
+            "JOYSTICK_SETUP_SUCCESSFUL": "$ detected.",
+            "JOYSTICK_DEVICE_UNREACHABLE": "The system does not appear to have any joysticks.",
+            "INVALID_INPUT": "One or more hotkeys are either not assigned or assigned to the same function."
+        }
+    },
+    "messages": {
+        "LANGUAGE_PAIR_NOT_AVAILABLE": "The selected translation language pair is not available for translation using $.",
+        "JOYSTICK_SETUP_SUCCESSFUL": "$ has been correctly setup.",
+        "ERROR_EMULATOR_EXECUTABLE_NOT_FOUND": "Failed attempt to launch the emulator.\r\nPlease make sure that you have specified its location on your system.",
+        "INCOMPATIBLE_JOYSTICK_DEVICE": "$ is not suitable for use with Video Game Reader.",
+        "JOYSTICK_DEVICE_DISCONNECTION": "$ has been disconnected."
+    }
+}

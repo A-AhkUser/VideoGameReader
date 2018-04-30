@@ -1,0 +1,59 @@
+﻿{
+    "languages": {
+        "english": {
+            "nativeName": "english",
+            "name": "english",
+            "code": "en"
+        },
+        "español": {
+            "nativeName": "español",
+            "name": "spanish",
+            "code": "es"
+        },
+        "français": {
+            "nativeName": "français",
+            "name": "french",
+            "code": "fr"
+        },
+        "русский": {
+            "nativeName": "русский",
+            "name": "russian",
+            "code": "ru"
+        },
+        "deutsch": {
+            "nativeName": "deutsch",
+            "name": "german",
+            "code": "de"
+        },
+        "português": {
+            "nativeName": "português",
+            "name": "portuguese",
+            "code": "pt"
+        },
+        "polski": {
+            "nativeName": "polski",
+            "name": "polish",
+            "code": "pl"
+        },
+        "italiano": {
+            "nativeName": "italiano",
+            "name": "italian",
+            "code": "it"
+        },
+        "türkçe": {
+            "nativeName": "türkçe",
+            "name": "turkish",
+            "code": "tr"
+        },
+        "українська": {
+            "nativeName": "українська",
+            "name": "ukrainian",
+            "code": "uk"
+        },
+        "česky": {
+            "nativeName": "česky",
+            "name": "czech",
+            "code": "cs"
+        }
+    }
+}

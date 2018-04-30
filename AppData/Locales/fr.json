@@ -1,0 +1,112 @@
+﻿{
+    "language": {
+        "name": "french",
+        "nativeName": "français",
+        "code": "fr"
+    },
+    "author": "A_AhkUser",
+    "TrayMenu": {
+        "Tray": [
+            "À &propos",
+            null,
+            "&Jouer",
+            "É&mulation",
+            "&Raccourcis manette et clavier",
+            "&Langue",
+            "&Quitter"
+        ],
+        "Tray#InputDevices": [
+            "&clavier",
+            "&manette"
+        ]
+    },
+    "UI.Reader_UI": {
+        "controls": {
+            "Tab_1": "Traduction|Soluce"
+        }
+    },
+    "UI.About_UI": {
+        "title": "À propos de $",
+        "controls": {
+            "version": "Version",
+            "website": "Page web",
+            "contact": "Contact"
+        }
+    },
+    "UI.Play_UI": {
+        "title": "Video Game Reader",
+        "controls": {
+            "gameTitle": "Entrer ou sélectionner le nom du jeu...",
+            "delete": "&effacer",
+            "create": "&créer",
+            "modify": [
+                "&modifier",
+                "&sauvegarder"
+            ],
+            "platform": "plate-forme",
+            "emulator": "émulateur",
+            "dictionary": "dictionnaire",
+            "language": "langue du jeu",
+            "gamePath": "chemin du fichier (jeu)",
+            "gameGuidePath": "chemin du fichier (soluce) [facultatif]",
+            "play": "&jouer"
+        },
+        "OwnDialogs": {
+            "INVALID_ALPHANUMERIC_STRING": "Le nom du jeu ne peut contenir que des caractères\r\nalphanumériques ([A-Za-z0-9]) et des espaces.",
+            "ERASURE_CONFIRMATION_PROMPT": "Voulez-vous vraiment supprimer $\r\nde manière définitive ?",
+            "PLATFORM_NOT_SPECIFIED": "Veuillez au préalable sélectionner une plate-forme pour le jeu.",
+            "FILE_SELECT_SELECT_GAME": "Sélectionner un jeu",
+            "FILE_SELECT_SELECT_GAME_GUIDE": "Sélectionner une soluce",
+            "SHELL_EMBEDDED_CANNOT_OPEN_PDF_FILES": "Foxit Reader n'est pas installé ou n'est pas configuré pour afficher les fichiers pdf dans un navigateur embarqué."
+        }
+    },
+    "UI.Emulation_UI": {
+        "title": "Émulation",
+        "controls": {
+            "platform": "plate-forme",
+            "emulator": "émulateur",
+            "cancel": "&annuler",
+            "confirm": "&confirmer"
+        },
+        "OwnDialogs": {
+            "FILE_SELECT_SELECT_EMULATOR_EXE": "Sélectionner un émulateur",
+            "DISMISS_CONFIRMATION_PROMPT": "Fermer la fenêtre sans enregistrer les modifications ?"
+        }
+    },
+    "UI.Hotkeys_UI": {
+        "title": "Raccourcis manette et clavier",
+        "controls": {
+            "displayEvent": "afficher/cacher le clavier visuel",
+            "getGameGuide": "afficher la soluce",
+            "submitEvent": "traduire le texte sélectionné (dictionnaire)\r\ntraduire le texte saisi (clavier visuel)",
+            "inputSendBackSpace": "reprendre le jeu (dictionnaire)\r\ntouche 'retour arrière' (clavier visuel)",
+            "autocompleteAutocompletion": "entrer la suggestion en surbrillance (saisie prédictive)",
+            "autocompleteMenuSet_U": "diminuer la transparence de la fenêtre (dictionnaire)\r\nsuggestion précédente (saisie prédictive)",
+            "autocompleteMenuSet_D": "augmenter la transparence de la fenêtre (dictionnaire)\r\nssuggestion suivante (saisie prédictive)",
+            "inputShiftCaretPosition_L": "déplacer le curseur vers la gauche (clavier visuel)",
+            "inputShiftCaretPosition_R": "déplacer le curseur vers la droite (clavier visuel)",
+            "inputSendSpace": "insérer un espace (clavier visuel)",
+            "keyPressEvent": "insérer un symbole (clavier visuel)\r\n[manette uniquement] clic gauche de la souris",
+            "directionalEvent_L": "se déplacer sur le clavier visuel (gauche)",
+            "directionalEvent_U": "se déplacer sur le clavier visuel (haut)",
+            "directionalEvent_R": "se déplacer sur le clavier visuel (droite)",
+            "directionalEvent_D": "se déplacer sur le clavier visuel (bas)",
+            "thumbstickEvent_L": "déplacer la fenêtre du clavier visuel",
+            "thumbstickEvent_R": "déplacer le pointeur de la souris",
+            "cancel": "annuler",
+            "confirm": "confirmer"
+        },
+        "OwnDialogs": {
+            "JOYSTICK_SETUP_SUCCESSFUL": "$ détecté(e).",
+            "JOYSTICK_DEVICE_UNREACHABLE": "Aucun périphérique n'a pu être détecté.",
+            "INVALID_INPUT": "Un ou plusieurs raccourcis clavier n'ont pas été assignés et/ou sont assignés à la même fonction."
+        }
+    },
+    "messages": {
+        "LANGUAGE_PAIR_NOT_AVAILABLE": "La paire de traduction sélectionnée n'est pas disponible avec $.",
+        "JOYSTICK_SETUP_SUCCESSFUL": "$ a été correctement configuré(e).",
+        "ERROR_EMULATOR_EXECUTABLE_NOT_FOUND": "Le lancement de l'émulateur a échoué.\r\nVeuillez vous assurer d'avoir spécifier son emplacement dans votre système.",
+        "INCOMPATIBLE_JOYSTICK_DEVICE": "$ n'est pas compatible avec Video Game Reader.",
+        "JOYSTICK_DEVICE_DISCONNECTION": "$ a été déconnecté(e)."
+    }
+}

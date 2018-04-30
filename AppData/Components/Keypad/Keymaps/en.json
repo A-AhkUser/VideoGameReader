@@ -1,0 +1,132 @@
+﻿[
+    [
+        [
+            "q",
+            "w",
+            "e",
+            "r",
+            "t",
+            "y",
+            "u",
+            "i",
+            "o",
+            "p",
+            "*",
+            {
+                "letterpress": "⌫",
+                "isBackSpace": true
+            },
+            ""
+        ],
+        [
+            "a",
+            "q",
+            "s",
+            "d",
+            "f",
+            "g",
+            "h",
+            "j",
+            "k",
+            "l",
+            {
+                "letterpress": "↵",
+                "value": "{Enter}"
+            },
+            "",
+            ""
+        ],
+        [
+            {
+                "letterpress": "↑",
+                "toLayer": 1
+            },
+            "z",
+            "x",
+            "c",
+            "v",
+            "b",
+            "n",
+            "m",
+            {
+                "letterpress": "◀",
+                "setCaretPos": -1
+            },
+            {
+                "letterpress": "▶",
+                "setCaretPos": 1
+            },
+            {
+                "letterpress": "◢",
+                "submit": true
+            },
+            "",
+            ""
+        ]
+    ],
+    [
+        [
+            "Q",
+            "W",
+            "E",
+            "R",
+            "T",
+            "Y",
+            "U",
+            "I",
+            "O",
+            "P",
+            "*",
+            {
+                "letterpress": "⌫",
+                "isBackSpace": true
+            },
+            ""
+        ],
+        [
+            "A",
+            "Q",
+            "S",
+            "D",
+            "F",
+            "G",
+            "H",
+            "J",
+            "K",
+            "L",
+            {
+                "letterpress": "↵",
+                "value": "{Enter}"
+            },
+            "",
+            ""
+        ],
+        [
+            {
+                "letterpress": "↑",
+                "toLayer": 0
+            },
+            "Z",
+            "X",
+            "C",
+            "V",
+            "B",
+            "N",
+            "M",
+            {
+                "letterpress": "◀",
+                "setCaretPos": -1
+            },
+            {
+                "letterpress": "▶",
+                "setCaretPos": 1
+            },
+            {
+                "letterpress": "◢",
+                "submit": true
+            },
+            "",
+            ""
+        ]
+    ]
+]

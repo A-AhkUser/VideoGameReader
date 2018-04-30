@@ -1,0 +1,51 @@
+﻿{
+    "hotkeys": {
+        "keyboard": {
+            "displayEvent": "!d",
+            "keyPressEvent": "Enter",
+            "submitEvent": "!s",
+            "inputShiftCaretPosition_L": "!Left",
+            "inputShiftCaretPosition_R": "!Right",
+            "autocompleteMenuSet_U": "!Up",
+            "autocompleteMenuSet_D": "!Down",
+            "autocompleteAutocompletion": "!a",
+            "inputSendBackSpace": "BackSpace",
+            "inputSendSpace": "Space",
+            "directionalEvent_L": "Left",
+            "directionalEvent_U": "Up",
+            "directionalEvent_R": "Right",
+            "directionalEvent_D": "Down"
+        },
+        "joystick": {
+            "displayEvent": "Joy12",
+            "keyPressEvent": "Joy3",
+            "submitEvent": "Joy10",
+            "inputShiftCaretPosition_L": "Joy5",
+            "inputShiftCaretPosition_R": "Joy6",
+            "autocompleteMenuSet_U": "Joy7",
+            "autocompleteMenuSet_D": "Joy8",
+            "autocompleteAutocompletion": "Joy2",
+            "inputSendBackSpace": "Joy1",
+            "inputSendSpace": "Joy4",
+            "directionalEvent_L": "JoyPOV Left",
+            "directionalEvent_U": "JoyPOV Up",
+            "directionalEvent_R": "JoyPOV Right",
+            "directionalEvent_D": "JoyPOV Down",
+            "thumbstickEvent_L": "JoyXY",
+            "thumbstickEvent_R": "JoyZR"
+        },
+        "readOnlyValues": {
+            "keyboard": "BackSpace,Space,Enter,Left,Up,Right,Down",
+            "joystick": "JoyPOV Left,JoyPOV Up,JoyPOV Right,JoyPOV Down,JoyXY,JoyZR"
+        }
+    },
+    "joystick": {
+        "port": 0,
+        "settings": {
+            "multiplier": 0.55,
+            "threshold": 22,
+            "invertXAxis": false,
+            "invertYAxis": false
+        }
+    }
+}

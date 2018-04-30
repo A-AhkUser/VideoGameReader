@@ -1,0 +1,112 @@
+﻿{
+    "language": {
+        "name": "spanish",
+        "nativeName": "español",
+        "code": "es"
+    },
+    "author": "A_AhkUser",
+    "TrayMenu": {
+        "Tray": [
+            "A&cerca de...",
+            null,
+            "&Jugar",
+            "&Emulación",
+            "&Teclas de acceso rápido",
+            "&Idioma",
+            "&Salir"
+        ],
+        "Tray#InputDevices": [
+            "&teclado",
+            "&mando"
+        ]
+    },
+    "UI.Reader_UI": {
+        "controls": {
+            "Tab_1": "Traducción|Guía"
+        }
+    },
+    "UI.About_UI": {
+        "title": "Acerca de $",
+        "controls": {
+            "version": "Versión",
+            "website": "Página web",
+            "contact": "Contacto"
+        }
+    },
+    "UI.Play_UI": {
+        "title": "Video Game Reader",
+        "controls": {
+            "gameTitle": "Entre o seleccione el nombre del juego...",
+            "delete": "&borrar",
+            "create": "&crear",
+            "modify": [
+                "&modificar",
+                "&salvar"
+            ],
+            "platform": "plataforma",
+            "emulator": "emulador",
+            "dictionary": "diccionario",
+            "language": "idioma",
+            "gamePath": "ubicación del archivo (juego)",
+            "gameGuidePath": "ubicación del archivo (guía) [facultativo]",
+            "play": "&jugar"
+        },
+        "OwnDialogs": {
+            "INVALID_ALPHANUMERIC_STRING": "El nombre del juego solo puede contener caracteres\r\nalfanuméricos ([A-Za-z0-9]) y espacios.",
+            "ERASURE_CONFIRMATION_PROMPT": "¿ Suprimir $ en forma definitiva ?",
+            "PLATFORM_NOT_SPECIFIED": "Seleccione previamente una plataforma por favor.",
+            "FILE_SELECT_SELECT_GAME": "Seleccionar un juego",
+            "FILE_SELECT_SELECT_GAME_GUIDE": "Seleccionar una guía",
+            "SHELL_EMBEDDED_CANNOT_OPEN_PDF_FILES": "Foxit Reader no está instalado o no es configurado para vizualizar los archivos pdf en un navegador integrado."
+        }
+    },
+    "UI.Emulation_UI": {
+        "title": "Emulación",
+        "controls": {
+            "platform": "plataforma",
+            "emulator": "emulador",
+            "cancel": "c&ancelar",
+            "confirm": "&confirmar"
+        },
+        "OwnDialogs": {
+            "FILE_SELECT_SELECT_EMULATOR_EXE": "Seleccionar un emulador",
+            "DISMISS_CONFIRMATION_PROMPT": "¿ Cerrar la ventana sin guardar los cambios ?"
+        }
+    },
+    "UI.Hotkeys_UI": {
+        "title": "Teclas de acceso rápido",
+        "controls": {
+            "displayEvent": "mostrar/ocultar el teclado visual",
+            "getGameGuide": "mostrar la guía del juego",
+            "submitEvent": "traducir la selección (diccionario)\r\ntraducir el texto ingresado (teclado visual)",
+            "inputSendBackSpace": "reanudar el partido (diccionario)\r\ntecla de retroceso (teclado visual)",
+            "autocompleteAutocompletion": "ingresar la sugerencia resaltada (texto predictivo)",
+            "autocompleteMenuSet_U": "disminuir la transparencia de la ventana (diccionario)\r\ncambiar la sugerencia seleccionada (texto predictivo)",
+            "autocompleteMenuSet_D": "aumentar la transparencia de la ventana (diccionario)\r\ncambiar la sugerencia seleccionada (texto predictivo)",
+            "inputShiftCaretPosition_L": "mover el cursor hacia la izquierda (teclado visual)",
+            "inputShiftCaretPosition_R": "mover el cursor hacia la derecha (teclado visual)",
+            "inputSendSpace": "insertar un espacio (teclado visual)",
+            "keyPressEvent": "insertar un símbolo (teclado visual)\r\n[con el mando] clic izquierdo del ratón",
+            "directionalEvent_L": "desplazarse entre las teclas del teclado visual (left)",
+            "directionalEvent_U": "desplazarse entre las teclas del teclado visual (up)",
+            "directionalEvent_R": "desplazarse entre las teclas del teclado visual (right)",
+            "directionalEvent_D": "desplazarse entre las teclas del teclado visual (down)",
+            "thumbstickEvent_L": "desplazar la ventana del teclado visual",
+            "thumbstickEvent_R": "mover el puntero del ratón",
+            "cancel": "cancelar",
+            "confirm": "confirmar"
+        },
+        "OwnDialogs": {
+            "JOYSTICK_SETUP_SUCCESSFUL": "$ detectada/o.",
+            "JOYSTICK_DEVICE_UNREACHABLE": "Ningún mando no ha sido detectado.",
+            "INVALID_INPUT": "Una o más de las teclas de acceso rápido no han sido asignadas o han sido asignadas a la misma función."
+        }
+    },
+    "messages": {
+        "LANGUAGE_PAIR_NOT_AVAILABLE": "La pareja de idiomas de traducción seleccionada no está disponible con $.",
+        "JOYSTICK_SETUP_SUCCESSFUL": "$ ha sido correctamente configurada/o.",
+        "ERROR_EMULATOR_EXECUTABLE_NOT_FOUND": " El lanzamiento del emulador ha fallido.\r\nAsegúrese de que ha especificado su ubicación en el sistema.",
+        "INCOMPATIBLE_JOYSTICK_DEVICE": "$ no es compatible con Video Game Reader.",
+        "JOYSTICK_DEVICE_DISCONNECTION": "$ ha sido desconectada/o."
+    }
+}

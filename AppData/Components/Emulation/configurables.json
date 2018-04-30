@@ -1,0 +1,107 @@
+﻿{
+    "emulation": {
+        "Playstation": {
+            "pSX": {
+                "fullPath": null,
+                "dir": null,
+                "CMD": {
+                    "switches": null,
+                    "parameters": null,
+                    "flag": null
+                },
+                "executableName": "psxfin",
+                "config": {
+                    "fileName": "psx.ini",
+                    "settings": [
+                        {
+                            "section": "Graphics",
+                            "key": "PauseWhenDefocused",
+                            "value": 1
+                        }
+                    ]
+                },
+                "extensions": "*.bin;*.cue;*.iso;*.img;*.cdz;*.mdf;*.cdi;*.zip;*.rar",
+                "windows": [
+                    {
+                        "mainWindow": "ahk_class ConsoleWindowClass"
+                    },
+                    {
+                        "defaultWindow": "ahk_class pSX"
+                    }
+                ],
+                "WMSIParams": [
+                    "defaultWindow",
+                    1,
+                    5
+                ]
+            }
+        },
+        "PS2": {
+            "PCSX2": {
+                "fullPath": null,
+                "dir": null,
+                "CMD": {
+                    "switches": null,
+                    "parameters": null,
+                    "flag": null
+                },
+                "executableName": "pcsx2",
+                "config": {
+                    "fileName": "inis_1.4.0\\PCSX2_ui.ini",
+                    "settings": [
+                        {
+                            "section": "GSWindow",
+                            "key": "CloseOnEsc",
+                            "value": "disabled"
+                        }
+                    ]
+                },
+                "extensions": "*.iso;*.mdf;*.nrg;*.bin;*.img;*.dump;*.zip;*.rar",
+                "windows": [
+                    {
+                        "mainWindow": "PCSX2(?=.*\\.)"
+                    },
+                    {
+                        "defaultWindow": "PCSX2(?!.*\\.)"
+                    }
+                ],
+                "WMSIParams": [
+                    "mainWindow",
+                    1,
+                    5
+                ]
+            }
+        },
+        "GameCube": {
+            "Dolphin": {
+                "fullPath": null,
+                "dir": null,
+                "CMD": {
+                    "switches": null,
+                    "parameters": null,
+                    "flag": "--exec="
+                },
+                "executableName": "Dolphin",
+                "config": {
+                    "fileName": "User\\Config\\Dolphin.ini",
+                    "settings": []
+                },
+                "extensions": "*.elf;*.dol;*.gcm;*.gcz;*.iso;*.wad;*.zip;*.rar",
+                "windows": [
+                    {
+                        "defaultWindow": "Dolphin(?!.*\\.)"
+                    },
+                    {
+                        "mainWindow": "Dolphin(?=.*\\.)"
+                    }
+                ],
+                "WMSIParams": [
+                    "mainWindow",
+                    2,
+                    1
+                ]
+            }
+        }
+    },
+    "games": {}
+}

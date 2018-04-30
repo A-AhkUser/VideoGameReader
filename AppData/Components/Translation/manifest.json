@@ -1,0 +1,26 @@
+﻿{
+    "Linguee": {
+        "name": "Linguee",
+        "rootUrl": "https://linguee-api.herokuapp.com",
+        "languages": [
+            "english",
+            "español",
+            "français"
+        ],
+        "source": null,
+        "target": null,
+        "getDicSysName": "getDicSysName",
+        "getUrl": "getUrl",
+        "match": [],
+        "replace": [
+            []
+        ],
+        "HTML": {
+            "sourcePath": "...\\dictionaries\\Linguee\\Linguee.html",
+            "documentContainerSelector": ".C"
+        },
+        "onMatch": [
+            "getArticle"
+        ]
+    }
+}

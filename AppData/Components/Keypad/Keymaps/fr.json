@@ -1,0 +1,221 @@
+﻿[
+    [
+        [
+            {
+                "letterpress": "a",
+                "send": [
+                    "a",
+                    "â",
+                    "ä",
+                    "à"
+                ]
+            },
+            "z",
+            {
+                "letterpress": "e",
+                "send": [
+                    "e",
+                    "ê",
+                    "ë",
+                    "è"
+                ]
+            },
+            "r",
+            "t",
+            "y",
+            {
+                "letterpress": "u",
+                "send": [
+                    "u",
+                    "û",
+                    "ü",
+                    "ù"
+                ]
+            },
+            {
+                "letterpress": "i",
+                "send": [
+                    "i",
+                    "î",
+                    "ï",
+                    "ì"
+                ]
+            },
+            {
+                "letterpress": "o",
+                "send": [
+                    "o",
+                    "ô",
+                    "ö",
+                    "ò"
+                ]
+            },
+            "p",
+            {
+                "letterpress": "^",
+                "sendParam": 1
+            },
+            "*",
+            {
+                "letterpress": "⌫",
+                "isBackSpace": true
+            }
+        ],
+        [
+            "q",
+            "s",
+            "d",
+            "f",
+            "g",
+            "h",
+            "j",
+            "k",
+            "l",
+            "m",
+            "ù",
+            {
+                "letterpress": "◀",
+                "setCaretPos": -1
+            },
+            {
+                "letterpress": "▶",
+                "setCaretPos": 1
+            }
+        ],
+        [
+            {
+                "letterpress": "↑",
+                "toLayer": 1
+            },
+            "w",
+            "x",
+            "c",
+            "v",
+            "b",
+            "n",
+            "é",
+            "è",
+            {
+                "letterpress": "`",
+                "sendParam": 3
+            },
+            "à",
+            {
+                "letterpress": "◢",
+                "submit": true
+            },
+            {
+                "letterpress": "↵",
+                "value": "{Enter}"
+            }
+        ]
+    ],
+    [
+        [
+            {
+                "letterpress": "A",
+                "send": [
+                    "A",
+                    "Â",
+                    "Ä",
+                    "À"
+                ]
+            },
+            "Z",
+            {
+                "letterpress": "E",
+                "send": [
+                    "E",
+                    "Ê",
+                    "Ë",
+                    "È"
+                ]
+            },
+            "R",
+            "T",
+            "Y",
+            {
+                "letterpress": "U",
+                "send": [
+                    "U",
+                    "Û",
+                    "Ü",
+                    "Ù"
+                ]
+            },
+            {
+                "letterpress": "I",
+                "send": [
+                    "I",
+                    "Î",
+                    "Ï",
+                    "Ì"
+                ]
+            },
+            {
+                "letterpress": "O",
+                "send": [
+                    "O",
+                    "Ô",
+                    "Ö",
+                    "Ò"
+                ]
+            },
+            "P",
+            {
+                "letterpress": "¨",
+                "sendParam": 2
+            },
+            "*",
+            {
+                "letterpress": "⌫",
+                "isBackSpace": true
+            }
+        ],
+        [
+            "Q",
+            "S",
+            "D",
+            "F",
+            "G",
+            "H",
+            "J",
+            "K",
+            "L",
+            "M",
+            "Ù",
+            {
+                "letterpress": "◀",
+                "setCaretPos": -1
+            },
+            {
+                "letterpress": "▶",
+                "setCaretPos": 1
+            }
+        ],
+        [
+            {
+                "letterpress": "↑",
+                "toLayer": 0
+            },
+            "W",
+            "X",
+            "C",
+            "V",
+            "B",
+            "N",
+            "É",
+            "È",
+            "Ç",
+            "À",
+            {
+                "letterpress": "◢",
+                "submit": true
+            },
+            {
+                "letterpress": "↵",
+                "value": "{Enter}"
+            }
+        ]
+    ]
+]

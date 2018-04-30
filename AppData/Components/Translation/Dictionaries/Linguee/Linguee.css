@@ -1,0 +1,56 @@
+﻿.real_examples {
+padding-top: 80px;
+}
+.exact_match {
+font: normal normal normal 24px Segoe UI;
+}
+.translation:before {
+content: "▪"; 
+padding-right: 7px;
+}
+.translation {
+padding-left: 15px;
+list-style: none;
+font: normal normal bold 17px Segoe UI;
+}
+.word_type {
+font: italic normal bold 11px Palatino Linotype;
+}
+.example {
+padding-left: 30px;
+}
+.src {
+padding-top: 30px;
+border-top: 1px solid #666;
+}
+.source, .src {
+font: normal normal bold 13px Segoe UI;
+}
+.target, .dst {
+font: normal normal normal 16px Sitka Display;
+}
+.url, #Linguee {
+font: normal normal normal 11px Sitka Display;
+}
+
+.not_found, .error {
+font: normal normal normal 21px Segoe UI;
+}
+
+.translation:before, .translation, .correct_query {
+color: #002eff;
+}
+.exact_match, .source, .src {
+color: #000000;
+}
+.target, .dst, .url, #Linguee {
+color: #222;
+}
+.word_type, .not_found, .error {
+color: #666;
+}
+
+#Linguee {
+padding: 15px;
+border-top: thin solid rgb(0, 75, 255);
+}
