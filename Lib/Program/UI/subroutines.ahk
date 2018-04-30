@@ -490,9 +490,9 @@ static HOTKEYS_PER_PAGE := 5
 
 	GUI % _GUI.HWND ":Tab"
 
-	_GUI.submit(false), _controls := _GUI.controls
+	_controls := _GUI.controls, _readOnlyValues := (_hotkeys.readOnlyValues)[_input]
 	Loop % (_GUI.enum.count)
-		if (In((_hotkeys.readOnlyValues)[_input], (_control:=_controls[ _controlType . "Input_" . a_index ]).get()))
+		if (In(_readOnlyValues, (_control:=_controls[ _controlType . "Input_" . a_index ]).get()))
 			_control.disable()
 
 	_GUI.show("w" . _tw + 210 + 2 * _GUI.margin.v . " h" . _h, _localization.title)
