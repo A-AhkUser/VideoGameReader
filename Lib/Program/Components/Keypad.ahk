@@ -403,7 +403,7 @@ static _o := {"Left": [ "x", -1 ], "Up": [ "y", -1 ], "Right": [ "x", 1 ], "Down
 
 Keypad_Autocomplete_1_menuOnSelect(_autocomplete, _input, _selection) {
 _s := _autocomplete.getSelection(), _l := SubStr(_input, 1, _s), _r := SubStr(_input, _s + 1)
-ControlSetText,, % RegExReplace(_l, "^(.*\s)?\K[^\s]*", _selection) . _r, % _autocomplete.AHKID
+ControlSetText,, % StrReplace(RegExReplace(_l, "^(.*\s)?\K[^\s]*", _selection), "`n", "`r`n") . _r, % _autocomplete.AHKID
 sleep, 50
 ControlSend,, {End}{Pgdn}{End}, % _autocomplete.AHKID
 }
@@ -587,14 +587,21 @@ Class Autocomplete extends GUI.Control {
 
 	lastInput[ ByRef _isWord:="", ByRef _isSuggested:="" ] {
 		get {
-			_input := this.get(), _str := SubStr(_input, 1, _s:=this.getSelection())
-			_pos := RegExMatch(_str, "P)^(.*\s)?\K.*[^\s]", _length)
-			if (_isWord:=_isSuggested:=(_s <> _pos + _length - 1)) {
-				_match := SubStr(_str, _pos, _length)
-				ControlGet, _outputVar, Choice,,, % this.menu.AHKID
-				_isSuggested := (_match = _outputVar)
+			; =================================================================================
+			_input := this.get(), _s := this.getSelection()
+			if ((StrReplace(SubStr(_input, _s, 1), "`n", "") <> "") && (StrReplace(SubStr(_input, _s + 1, 1), A_Space, "") = "")) { ; -Tab
+				_leftSide := SubStr(_input, 1, _s)
+				_start := RegExMatch(_leftSide, "P)^(.*\s)?\K.*\s$", _lastInputLength)
+				if (_isWord:=(_lastInputLength > this.startAt)) {
+					_match := SubStr(_input, _start, _lastInputLength - 1)
+					ControlGet, _choice, Choice,,, % this.menu.AHKID
+					_isSuggested := (_match = _choice)
+				return _match
+				}
+				RegExMatch(_leftSide, "^(.*\s)?\K.{" . this.startAt . ",}", _match)
+			return _match
 			}
-			return ((_length >= this.startAt)) ? SubStr(_str, _pos, _length) : ""
+			; =================================================================================
 		}
 	}
 	hasSuggestions {
@@ -607,13 +614,14 @@ Class Autocomplete extends GUI.Control {
 }
 
 Autocomplete_shiftCaretPosition(this, _prm) {
-_pos := this.getSelection() + _prm
+this.getSelection(, _pos), _pos += _prm
 this.set("focus")
 SendMessage, 0xB1, %_pos%, %_pos%,, % this.AHKID ; EM_SETSEL (https://msdn.microsoft.com/en-us/library/windows/desktop/bb761661(v=vs.85).aspx)
 }
-Autocomplete_getSelectionRange(this, ByRef _startSel:="", ByRef _endSel:="") { ; cf. https://github.com/dufferzafar/Autohotkey-Scripts/blob/master/lib/Edit.ahk
+Autocomplete_getSelectionRange(this, ByRef _startSel:="", ByRef _endSel:="") { ; cf. also: https://github.com/dufferzafar/Autohotkey-Scripts/blob/master/lib/Edit.ahk
 	_id := this.AHKID, VarSetCapacity(_startPos, 4, 0), VarSetCapacity(_endPos, 4, 0)
     SendMessage 0xB0, &_startPos, &_endPos,, % _id ; EM_GETSEL
     _startSel := NumGet(_startPos), _endSel := NumGet(_endPos)
-return _endSel
+	StrReplace(SubStr(this.get(), 1, _endSel), "`n",, _count)
+return _endSel - _count
 }
