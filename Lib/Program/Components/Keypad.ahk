@@ -520,7 +520,7 @@ Class Autocomplete extends GUI.Control {
 					} else RegExMatch("$`n" . _str, "i)\n\Q" . _lastInput . "\E.*\n\Q" . _lastInput . "\E.+?(?=\n)", _match)
 				}
 				; =======================================================
-			} else if (!_isSuggested && this.appendHapax) {
+			} else if (!_isSuggested && this.appendHapax && !InStr(_lastInput, "*")) {
 				this.__hapax(_letter, _lastInput)
 			}
 		}
