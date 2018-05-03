@@ -72,11 +72,12 @@
 				grid: {columns: {current: 0, maxIndex: 0}, rows: {current: 0, maxIndex: 0}},
 				buttons: {
 					HTMLCollection: _HTMLElement.getElementsByClassName("key"),
-					wDesired: _width,
-					hDesired: _height
+					wDesired: _width.toString().replace(/\D/g, ""),
+					hDesired: _height.toString().replace(/\D/g, "")
 				},
 				get layouts() {
-				return Object.keys(this.keymaps);
+				var _keys = Object.keys(this.keymaps);
+				return [ _keys.join("|") ].concat(_keys);
 				},
 				layout: "",
 				layer: "",
@@ -95,7 +96,7 @@
 				setLayout: function(_layout) {
 
 					_layout = _layout.toLowerCase();
-					if (!(this.layouts.indexOf(_layout) > -1))
+					if (!(this.layouts.shift().indexOf(_layout) > -1))
 				return -1;
 					if (_layout == this.layout)
 				return 0;
