@@ -428,14 +428,14 @@ VGR_UI_Emulation_UI_GUIClose(_boundBoolean, _GUI) {
 
 ; ====================================================================================================
 
-VGR_UI_Hotkeys_UI(_input) {
+VGR_UI_Hotkeys_UI(_device) {
 
 static _w := 680, _h := 450
 static _tw := _w // 2
 static HOTKEYS_PER_PAGE := 5
 
-	_input := Format("{:L}", _input)
-	if _input not in joystick,keyboard
+	_device := Format("{:L}", _device)
+	if _device not in joystick,keyboard
 		return
 	if (WinExist("ahk_group VGR_UI"))
 		return
@@ -443,7 +443,7 @@ static HOTKEYS_PER_PAGE := 5
 	_hotkeys := VGR.settings.data.hotkeys
 	_localization := (VGR.UI.localization.data)["UI.Hotkeys_UI"]
 
-	_GUI := VGR.UI.Hotkeys_UI := new GUI("+LastFound") ; +E0x00000400 WS_EX_CONTEXTHELP
+	_GUI := VGR.UI.Hotkeys_UI := new GUI("+LastFound")
 	_GUI.onClose := Func("VGR_UI_Hotkeys_UI_GUIClose")
 	_GUI.setColor("White", "White")
 	_GUI.setMargin(29, 19)
@@ -451,26 +451,26 @@ static HOTKEYS_PER_PAGE := 5
 	_GUI.add("Picture", "xm ym Icon18", "setupapi.dll")
 	_GUI.add("Button", "Section vcancel xm+" . _tw " y" . (_height:=_h - 3 * _GUI.margin.v) . " w80 h24", _localization).onEvent := Func("VGR_UI_GuiClose")
 	_GUI.add("Button", "vconfirm xp+90 yp wp hp", _localization)
-	_GUI.lastFoundControl.onEvent := Func("VGR_UI_Hotkeys_UI_Submit").bind(_input)
+	_controlType := (_device == "keyboard") ? "hotkey" : "button"
+	_GUI.lastFoundControl.onEvent := Func("VGR_UI_Hotkeys_UI_Submit").bind(_device, _controlType)
 	_tab := _GUI.add("Tab", "Section vTab_1 c514d51 xs ym w" . (210 + 2 * _GUI.margin.v) . " h" . _height:=_height - 24, _t:=1)
 	GUI % _GUI.HWND ":Tab", % _t
 
-		if (_input == "joystick") {
+		if (_device == "joystick") {
 			_GUI.setOptions("+Disabled")
 			_enum := _GUI.enum := new JSONData.Enumerator(_hotkeys.joystick)
-			_controlType := "button"
 			_f := Func("VGR_UI_Hotkeys_UI_jInputConnect").bind(_GUI, _GUI.jInput:=new Joystick())
 			SetTimer % _f, -2000
 		} else {
 			_enum := _GUI.enum := new JSONData.Enumerator(_hotkeys.keyboard)
-			_controlType := "hotkey"
 		}
 
 		_options := "0x10 xm+32 yp-3 w" . _tw - 32 . " h1" ; SS_ETCHEDHORZ
+		_height := (_height // (HOTKEYS_PER_PAGE + 1))
 		_i := 1
 		while (_enum.next(_k, _v)) {
 
-			_GUI.add("Text", "c514d51 xm ym+" . (_height // (HOTKEYS_PER_PAGE + 1)) * _i . " w" . (_tw - 5) . " h31 +Right v" . _k, _localization)
+			_GUI.add("Text", "c514d51 xm ym+" . _height * _i . " w" . (_tw - 5) . " h31 +Right v" . _k, _localization)
 			_GUI.add("Text", _options)
 			_GUI.setFont("s10 bold", "Calibri")
 			_GUI.add(_controlType, "xm+" . (_tw + 5) . " yp w200 h21 v" . _controlType . "Input_" . a_index, _v)
@@ -490,7 +490,7 @@ static HOTKEYS_PER_PAGE := 5
 
 	GUI % _GUI.HWND ":Tab"
 
-	_controls := _GUI.controls, _readOnlyValues := (_hotkeys.readOnlyValues)[_input]
+	_controls := _GUI.controls, _readOnlyValues := (_hotkeys.readOnlyValues)[_device]
 	Loop % (_GUI.enum.count)
 		if (In(_readOnlyValues, (_control:=_controls[ _controlType . "Input_" . a_index ]).get()))
 			_control.disable()
@@ -498,7 +498,6 @@ static HOTKEYS_PER_PAGE := 5
 	_GUI.show("w" . _tw + 210 + 2 * _GUI.margin.v . " h" . _h, _localization.title)
 	GroupAdd, VGR_UI, % _GUI.AHKID
 	GroupAdd, Keypad, % _GUI.AHKID
-	; OnMessage(0x53, Func("WM_HELP_monitor").bind(_localization))
 
 }
 VGR_UI_Hotkeys_UI_jInputConnect(_GUI, _joystick) {
@@ -530,17 +529,12 @@ VGR_UI_Hotkeys_UI_jInputConnect(_GUI, _joystick) {
 
 }
 
-VGR_UI_Hotkeys_UI_Submit(_boundInputType, _GUI) {
+VGR_UI_Hotkeys_UI_Submit(_boundInputType, _boundControlType, _GUI) {
 
-local _controlType, _isKeyboard
-local _controls := _GUI.controls, _str := Chr(44), _x
-local _keys
-
-	_GUI.submit(false)
-	_controlType := (_isKeyboard:=(_boundInputType == "keyboard")) ? "hotkey" : "button"
+	_controls := _GUI.controls, _str := Chr(44)
 
 	Loop % (_GUI.enum.count) {
-		if not (In(_str, _x:=buttonInput_%a_index%:=_controls[ _controlType . "Input_" . a_index ].get())) {
+		if not (In(_str, _x:=%_boundControlType%Input_%a_index%:=_controls[ _boundControlType . "Input_" . a_index ].get())) {
 			_str .= _x . ","
 		} else {
 			GUI.instances[ A_GUI ].setOptions("+OwnDialogs")
@@ -550,9 +544,9 @@ local _keys
 	}
 	_keys := (VGR.settings.data.hotkeys)[_boundInputType]
 	while (_GUI.enum.next(_x))
-		_keys[_x] := %_controlType%Input_%a_index%
+		_keys[_x] := %_boundControlType%Input_%a_index%
 
-	VGR.settings.updateData(), VGR.setHotkeys(_isKeyboard, !_isKeyboard)
+	VGR.settings.updateData(), VGR.setHotkeys(_isKeyboard:=(_boundInputType == "keyboard"), !_isKeyboard)
 	_GUI.close(true)
 
 }
