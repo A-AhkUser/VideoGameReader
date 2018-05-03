@@ -1,7 +1,7 @@
 ﻿global Keypad :=
 (LTrim Join C
 	{
-		WORKING_DIRECTORY: A_ScriptDir . "\__Keypad",
+		WORKING_DIRECTORY: A_ScriptDir . "\Keypad",
 		settings: "",
 		updateSettings: Func("Keypad_updateSettings"),
 		setHotkeys: Func("Keypad_setHotkeys"),
@@ -37,6 +37,7 @@
 )
 ; backgroundLayer: "",
 ; backgroundLayerTransparency: 110,
+
 Keypad_Init() {
 
 static _init := 0
@@ -65,10 +66,10 @@ IfNotEqual _init, 0, return _init
 			_str .= ",""" . _layout . """:" . RegExReplace(_data.raw, "\s", "")
 
 	}
-
 	if not ((_str <> ""))
 		return 0, ErrorLevel:=-3
-	if not (_f:=FileOpen(Keypad.WORKING_DIRECTORY . "\Keypad.html", "r", "UTF-8"))
+
+	if not (_f:=FileOpen(Keypad.WORKING_DIRECTORY . "\Keypad", "r", "UTF-8"))
 		return 0, ErrorLevel:=-2
 	Keypad._html := RegExReplace(_f.read(), "\$", "{" . LTrim(_str, ",") . "}"), _f.close()
 
@@ -83,7 +84,7 @@ Keypad_New(this, _style:="") {
 		return false
 
 	_GUI := this.GUI := new GUI("+ToolWindow +AlwaysOnTop -Caption")
-	, _GUI.onClose := Func("Keypad_GUICloseEvent")
+	, _GUI.onClose := Func("Keypad_GUI_GUICloseEvent")
 
 	_GUI.setMargin(_m:=5, _m)
 	_GUI.add("Text", "vText_1 x0 y0 h" . 21 . " Border").onEvent := Func("Keypad_GUI_Text_1")
@@ -96,9 +97,9 @@ Keypad_New(this, _style:="") {
 	} catch {
 		return false, ErrorLevel:=-1
 	}
-	sleep, 100
+	sleep, 300
 
-	_doc := _control.doc, this._keyboard := _doc.parentWindow.Keyboard
+	_doc := _control.doc, this.keyboard := _doc.parentWindow.Keyboard
 
 	_input := _doc.createElement("span"), _input.setAttribute("id", "input"), _input.setAttribute("class", "autocomplete"), _doc.body.appendChild(_input)
 	_menu := _doc.createElement("span"), _menu.setAttribute("id", "menu"), _menu.setAttribute("class", "autocomplete"), _doc.body.appendChild(_menu)
@@ -107,9 +108,9 @@ Keypad_New(this, _style:="") {
 	_GUI.setColor(_doc.body.currentStyle.getAttribute("background-color"), _sInput.getAttribute("background-color"))
 	, _GUI.setFont("s" . _sInput.getAttribute("font-size") . " c" . _sInput.color, _sInput.getAttribute("font-family"))
 
-	_editOptions := "vAutocomplete_1 Section xm y" . _m + 21 . " h" . 58 . " Limit -VScroll +Resize"
+	_editOptions := "vAutocomplete_1 Section xm y" . _m + 21 . " h" . 58 . " Limit +Resize"
 	, _editContent := ""
-	, _menuOptions := "ys w160 -VScroll +Disabled"
+	, _menuOptions := "ys w160 -VScroll" ; +Disabled
 	, _menuStyles := "s" . _sMenu.getAttribute("font-size") . " c" . _sMenu.color, _sMenu.getAttribute("font-family")
 	_autocomplete := _GUI.add("Autocomplete", _editOptions, _editContent, _menuOptions, _menuStyles)
 	, _autocomplete.appendHapax := true
@@ -133,20 +134,24 @@ Keypad_setActivationContext(this, _type, _title) {
 	_baseContext := Hotkey.baseContext, _ty := _baseContext.type, _ti := _baseContext.title
 	try Hotkey.setContext(_type, _title)
 	catch
-		return
+		return false
 
 		this.activationContext.type := _type, this.activationContext.title := _title
 		Hotkey.setContext(_ty, _ti)
+		return true
 
 }
 Keypad_setHotkeys(this, _keyboard:=true, _joystick:=true) {
 
 static _ := (Hotkey.setGroup("Keypad_keyboard"), Hotkey.setGroup("Keypad_joystick"), Hotkey.setGroup())
 static _o := {Left: [ "columns", -1 ], Up: [ "rows", -1 ], Right: [ "columns", 1 ], Down: [ "rows", 1 ]}
+static _bs
+static _b := (_bs:=new JSONData.DataTypes.Object).isBackSpace := true
 
 	_settings := Keypad.settings, _hotkeys := _settings.data.hotkeys
 	_activationContext := this.activationContext, _ty := _activationContext.type, _ti := _activationContext.title
-	_autocomplete := this.GUI.controls["Autocomplete_1"], (_bs:=new JSONData.DataTypes.Object).isBackSpace := true
+
+	_autocomplete := this.GUI.controls["Autocomplete_1"]
 
 	if (_keyboard) {
 
@@ -167,7 +172,7 @@ static _o := {Left: [ "columns", -1 ], Up: [ "rows", -1 ], Right: [ "columns", 1
 			, new Hotkey(_khk.autocompleteMenuSet_D, ObjBindMethod(_autocomplete, "menuSetSelection", 1))
 			, new Hotkey(_khk.autocompleteAutocompletion, ObjBindMethod(_autocomplete, "menuGetSelection"))
 			, new Hotkey("BackSpace", ObjBindMethod(this, "__keyPress", _bs))
-			, new Hotkey("Space", ObjBindMethod(this, "__keyPress", "{Space}"))
+			, new Hotkey("Space", ObjBindMethod(this, "__keyPress", A_Space))
 
 		} catch {
 			return false, ErrorLevel:=-1
@@ -209,7 +214,7 @@ static _o := {Left: [ "columns", -1 ], Up: [ "rows", -1 ], Right: [ "columns", 1
 				, new Hotkey(_jhk.autocompleteMenuSet_D, ObjBindMethod(_autocomplete, "menuSetSelection", 1))
 				, new Hotkey(_jhk.autocompleteAutocompletion, ObjBindMethod(_autocomplete, "menuGetSelection"))
 				, new Hotkey(_jhk.inputSendBackSpace, ObjBindMethod(this, "__keyPress", _bs))
-				, new Hotkey(_jhk.inputSendSpace, ObjBindMethod(this, "__keyPress", "{Space}"))
+				, new Hotkey(_jhk.inputSendSpace, ObjBindMethod(this, "__keyPress", A_Space))
 			Hotkey.setContext(_ty, _ti)
 				new Hotkey(_jhk.displayEvent, ObjBindMethod(this, "__display"))
 
@@ -234,7 +239,7 @@ Keypad_displayEvent(this, _boolean:="") {
 			ControlGetFocus, _focusedControl, A
 			ControlGet, _ID, Hwnd,, % _focusedControl, A
 			ControlGet, _lineCount, LineCount,,, % (_AHKID:="ahk_id " . _ID)
-			this.lastFoundControl := (_lineCount) ? {ID: _ID, AHKID: _AHKID} : ""
+			this.lastFoundControl := (_lineCount) ? {HWND: _ID, AHKID: _AHKID} : ""
 			this.GUI.setTransparency(this.GUITransparency) ; , this.backgroundLayer.setTransparency(this.backgroundLayerTransparency)
 			this.GUI.activate()
 			_jInput := this.jInput
@@ -257,7 +262,7 @@ Keypad_displayEvent(this, _boolean:="") {
 }
 Keypad_keyPressEvent(this, _key:="") {
 
-	_keyboard := this._keyboard
+	_keyboard := this.keyboard, _autocomplete := this.GUI.controls["Autocomplete_1"]
 	if (_key = "")
 		_grid := _keyboard.grid, _key := ((((_keyboard.keymaps)[ _keyboard.layout ])[ _keyboard.layer ])[ _grid.rows.current ])[ _grid.columns.current ]
 
@@ -265,24 +270,23 @@ Keypad_keyPressEvent(this, _key:="") {
 
 			if (_key.hasOwnProperty("value")) {
 				_keyboard.sendParam := 0
-				ControlSend,, % _key.value, % this.GUI.controls["Autocomplete_1"].AHKID
+				ControlSend,, % _key.value, % _autocomplete.AHKID
 			} else if (_key.hasOwnProperty("isBackSpace")) {
 				if (_key.isBackSpace) {
-				_control := this.GUI.controls["Autocomplete_1"]
-					if (_control.get() <> "") {
-						_control.set("focus")
-						ControlSend,, {BackSpace}, % _control.AHKID
+					if (_autocomplete.get() <> "") {
+						_autocomplete.set("focus")
+						ControlSend,, {BackSpace}, % _autocomplete.AHKID
 					} else this.__submit(false, false)
 				}
 			} else if (_key.hasOwnProperty("sendParam")) {
 				_keyboard.sendParam := _key.sendParam
 			} else if (_key.hasOwnProperty("send")) {
 				try _key := (_key.send)[_keyboard.sendParam], _keyboard.sendParam := 0
-				ControlSend,, % _key, % this.GUI.controls["Autocomplete_1"].AHKID
+				ControlSend,, % _key, % _autocomplete.AHKID
 			} else if (_key.hasOwnProperty("setCaretPos")) {
-				(_key.setCaretPos && this.GUI.controls["Autocomplete_1"].shiftCaretPosition(_key.setCaretPos))
+				(_key.setCaretPos && _autocomplete.shiftCaretPosition(_key.setCaretPos))
 			} else if (_key.hasOwnProperty("toLayer")) {
-				this._keyboard.setLayer(_key.toLayer)
+				this.keyboard.setLayer(_key.toLayer)
 			} else if (_key.hasOwnProperty("submit")) {
 				if (_key.submit)
 					this.__submit(this.noHideOnSubmit, true)
@@ -290,9 +294,9 @@ Keypad_keyPressEvent(this, _key:="") {
 
 		} else {
 			_keyboard.sendParam := 0
-			ControlSend,, % _key, % this.GUI.controls["Autocomplete_1"].AHKID
+			ControlSend,, % _key, % _autocomplete.AHKID
 		}
-		(this.onKeyPress && this.onKeyPress.call(this, _key))
+		(this.onKeyPress && this.onKeyPress.call(this, _autocomplete, _key))
 
 }
 Keypad_submitEvent(this, _nohide:=false, _prm:=true) {
@@ -304,18 +308,16 @@ Keypad_submitEvent(this, _nohide:=false, _prm:=true) {
 	if not (_nohide)
 		this.__display()
 
-	if (this.lastFoundControl.AHKID)
-		ControlFocus,, % this.lastFoundControl.AHKID
-
-	if (_prm && this.onSubmit)
-		this.onSubmit.call(this, _v)
+	if (_prm && this.onSubmit) {
+		this.onSubmit.call(this, _v, this.lastFoundControl.HWND)
+	}
 
 }
 Keypad_setLayout(this, _layout) {
 
 	static _l := ""
 
-	_keyboard := this._keyboard
+	_keyboard := this.keyboard
 	if not (_v:=_keyboard.setLayout(_layout))
 		return false, ErrorLevel:=(_v < 0)
 
@@ -328,7 +330,7 @@ Keypad_setLayout(this, _layout) {
 
 		_w := _keyboard.buttons.wDesired * (_columns.maxIndex + 1), _h := _keyboard.buttons.hDesired * (_rows.maxIndex + 1)
 		, _AXC.set("move", "w" . _w . " h" . _h)
-		_autocomplete.minSize.w := _autocomplete.maxSize.w := 31 * (_columns.maxIndex + 1)
+		_autocomplete.minSize.w := _autocomplete.maxSize.w := _w
 		GuiControlGet, _pos, Pos, % _autocomplete.HWND
 		_autocomplete.onSize(_GUI, _controls, _w, _posh, _x:=_posx + _w, _y:=_posy + _posh)
 		, _autocomplete.resizer.set("moveDraw", "x" . _x - 7 . " y" . _y - 7)
@@ -341,7 +343,7 @@ Keypad_setLayout(this, _layout) {
 return true
 }
 Keypad_setLayer(_layer) {
-return this._keyboard.setLayer(_layer)
+return this.keyboard.setLayer(_layer)
 }
 
 Keypad_destroy(this) {
@@ -359,7 +361,7 @@ Keypad.settings.updateData()
 }
 
 Keypad_keyboardButtonsShiftFocus(this, _axis, _δ) {
-this._keyboard.buttonsShiftFocus(_axis, _δ)
+this.keyboard.buttonsShiftFocus(_axis, _δ)
 }
 
 
@@ -405,10 +407,11 @@ Keypad_Autocomplete_1_menuOnSelect(_autocomplete, _input, _selection) {
 _s := _autocomplete.getSelection(), _l := SubStr(_input, 1, _s), _r := SubStr(_input, _s + 1)
 ControlSetText,, % StrReplace(RegExReplace(_l, "^(.*\s)?\K[^\s]*", _selection), "`n", "`r`n") . _r, % _autocomplete.AHKID
 sleep, 50
-ControlSend,, {End}{Pgdn}{End}, % _autocomplete.AHKID
+SendMessage, 0xB1, 0, -1,, % _autocomplete.AHKID ; EM_SETSEL (https://msdn.microsoft.com/en-us/library/windows/desktop/bb761661(v=vs.85).aspx)
+_autocomplete.shiftCaretPosition()
 }
 
-Keypad_GUICloseEvent() {
+Keypad_GUI_GUICloseEvent() {
 return -1
 }
 
@@ -428,7 +431,7 @@ Class Autocomplete extends GUI.Control {
 
 	__New(_GUI, _options, _text, _extra*) {
 
-		_options := StrReplace(_options, " +Resize", "", _resize), base.__New(_GUI, "Edit", _options, _text)
+		_options := RegExReplace(_options, "i)\s\K\+?Resize", "", _resize), base.__New(_GUI, "Edit", _options, _text)
 
 		if (_resize) {
 			GuiControlGet, _pos, Pos, % this.HWND
@@ -437,7 +440,7 @@ Class Autocomplete extends GUI.Control {
 		}
 		this.AHKID := "ahk_id " . this.HWND
 		this.onEvent := this.suggestWordList.bind(this)
-		Gui, % _GUI.HWND . ":Font", % _extra[2], % _extra[3]
+		Gui, % _GUI.HWND . ":Font", % StrReplace(_extra.2, "c#", "c"), % StrReplace(_extra.3, "c#", "c")
 		(this.menu:=_GUI.add("ListBox", _extra[1])).AHKID := "ahk_id " . _GUI.lastFoundControl.HWND
 		_GUI.setFont(_GUI.font.options, _GUI.font.fontname)
 
@@ -456,7 +459,7 @@ Class Autocomplete extends GUI.Control {
 		GuiControlGet, _pos, Pos, % this.HWND
 		_x := _posx, _y := _posy, _minSz := this.minSize, _maxSz := this.maxSize
 
-		while (GetKeyState("LButton", "")) {
+		while (GetKeyState("LButton", "P")) {
 			MouseGetPos, _mousex, _mousey
 			_w := _mousex - _x, _h := _mousey - _y
 			if (_w <= _minSz.w)
@@ -492,7 +495,8 @@ Class Autocomplete extends GUI.Control {
 		ErrorLevel := 0
 		_list := _sources[_source].list := LTrim(_list, "`n")
 
-		while ((_letter:=SubStr(_list, 1, 1)) && _pos:=RegExMatch(_list, "Pmsi)\Q" . _letter . "\E.*\n\Q" . _letter . "\E.+?\n", _len)) {
+
+		while ((_letter:=SubStr(_list, 1, 1)) && _pos:=RegExMatch(_list, "Psi)\Q" . _letter . "\E.*\n\Q" . _letter . "\E.+?\n", _len)) {
 			_sources[_source][_letter] := SubStr(_list, 1, _pos + _len - 1), _list := SubStr(_list, _pos + _len)
 		}
 
@@ -513,14 +517,12 @@ Class Autocomplete extends GUI.Control {
 		if (_lastInput) {
 			_letter := SubStr(_lastInput, 1, 1)
 			if not (_isWord) {
-				; =======================================================
 				if (_str:=this.sources[ this.source ][_letter]) {
 					if (InStr(_lastInput, "*") && (_parts:=StrSplit(_lastInput, "*")).length() = 2) {
 						_match .= RegExReplace(_str, "`am)^(?!" _parts.1 ".*" _parts.2 ").*\R") ; many thanks to AlphaBravo for this regex
 					} else RegExMatch("$`n" . _str, "i)\n\Q" . _lastInput . "\E.*\n\Q" . _lastInput . "\E.+?(?=\n)", _match)
 				}
-				; =======================================================
-			} else if (!_isSuggested && this.appendHapax && !InStr(_lastInput, "*")) {
+			} else if (this.appendHapax && (StrLen(_lastInput) > 3) && !InStr(_lastInput, "*") && !_isSuggested) {
 				this.__hapax(_letter, _lastInput)
 			}
 		}
@@ -587,9 +589,8 @@ Class Autocomplete extends GUI.Control {
 
 	lastInput[ ByRef _isWord:="", ByRef _isSuggested:="" ] {
 		get {
-			; =================================================================================
 			_input := this.get(), _s := this.getSelection()
-			if ((StrReplace(SubStr(_input, _s, 1), "`n", "") <> "") && (StrReplace(SubStr(_input, _s + 1, 1), A_Space, "") = "")) { ; -Tab
+			if ((StrReplace(SubStr(_input, _s, 1), "`n", "") <> "") && (StrReplace(SubStr(_input, _s + 1, 1), A_Space, "") = "")) {
 				_leftSide := SubStr(_input, 1, _s)
 				_start := RegExMatch(_leftSide, "P)^(.*\s)?\K.*\s$", _lastInputLength)
 				if (_isWord:=(_lastInputLength > this.startAt)) {
@@ -601,7 +602,6 @@ Class Autocomplete extends GUI.Control {
 				RegExMatch(_leftSide, "^(.*\s)?\K.{" . this.startAt . ",}", _match)
 			return _match
 			}
-			; =================================================================================
 		}
 	}
 	hasSuggestions {
@@ -613,7 +613,7 @@ Class Autocomplete extends GUI.Control {
 
 }
 
-Autocomplete_shiftCaretPosition(this, _prm) {
+Autocomplete_shiftCaretPosition(this, _prm:=0) {
 this.getSelection(, _pos), _pos += _prm
 this.set("focus")
 SendMessage, 0xB1, %_pos%, %_pos%,, % this.AHKID ; EM_SETSEL (https://msdn.microsoft.com/en-us/library/windows/desktop/bb761661(v=vs.85).aspx)
