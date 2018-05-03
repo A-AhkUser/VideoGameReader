@@ -69,7 +69,7 @@ IfNotEqual _init, 0, return _init
 	if not ((_str <> ""))
 		return 0, ErrorLevel:=-3
 
-	if not (_f:=FileOpen(Keypad.WORKING_DIRECTORY . "\Keypad", "r", "UTF-8"))
+	if not (_f:=FileOpen(Keypad.WORKING_DIRECTORY . "\Keypad.html", "r", "UTF-8"))
 		return 0, ErrorLevel:=-2
 	Keypad._html := RegExReplace(_f.read(), "\$", "{" . LTrim(_str, ",") . "}"), _f.close()
 
