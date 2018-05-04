@@ -25,7 +25,7 @@
 
 				if not (_index = _params.length())
 					throw ErrorLevel := 1
-				_state := !!_param
+				_state := !!_params.pop()
 
 			} else this.callbacks.push(_param)
 
@@ -57,7 +57,7 @@
 
 					this := _context[_keyName]
 					this.__press := this._callCallbackChain.bind({"callbacks": this.callbacks})
-					, this.__released := this._callCallbackChain.bind({"callbacks": _callbacks})
+					, this.__released := this._callCallbackChain.bind({"callbacks": _params})
 
 					_f := this._joyButtonR.bind(this)
 					this._boundIterators.joyRepeat.delete(), this._boundIterators.joyRepeat := new Bound.Func.Iterator(this, "_joyRepeat2")
@@ -118,10 +118,10 @@
 
 	}
 
-	onReleased(ByRef _hotkey, _callbacks*) {
-	if ((_hotkey.device = "joystick") && !_hotkey._isKeyUp)
-		_hotkey := new Hotkey(_hotkey.keyName . " Up", _callbacks*)
-	else throw Exception(-2)
+	onReleased(_callbacks*) {
+		if (this.device = "joystick" && !this._isKeyUp)
+			return new Hotkey(this.keyName . " Up", _callbacks*)
+		throw Exception(-2)
 	}
 
 	; ===== CALLED VIA BASE OBJECT /=====
@@ -146,6 +146,10 @@
 		} else Hotkey._group := ""
 
 	}
+	hasGroup(_group) {
+	return (Hotkey.hasKey("G_" . _group))
+	}
+
 	setContext(_type:="IfWinActive", _winTitle:="A") {
 
 		if not (Trim(_type) ~= "^(IfWinActive|IfWinNotActive|IfWinExist|IfWinNotExist|If)$")
@@ -160,7 +164,6 @@
 	}
 
 	; =====/ CALLED VIA BASE OBJECT =====
-
 	; ===== PRIVATE /=====
 
 	static _inputDevices := ["keyboard", "joystick"]
@@ -198,7 +201,6 @@
 			_boundIterator.delete()
 
 		_hotkeys := (this.group) ? Hotkey[ this.group ][ this.device ] : Hotkey[ this.device ]
-
 		if not ((_context:=_hotkeys[_type:=this.context.type, _title:=this.context.title]).hasKey(this.keyName))
 			return -1
 		_context.remove(this.keyName), _l := NumGet(&_context, 4 * A_PtrSize)
@@ -243,14 +245,12 @@
 			}
 		} else {
 			for _index, _device in Hotkey._inputDevices, _instances := [] {
-				for _hkDevice, _obj1 in Hotkey[_device] {
-					for _hkType, _obj2 in _obj1 {
-						for _hkTitle, _obj3 in _obj2 {
-							Hotkey.setContext(_hkType, _hkTitle)
-								for _, _hotkey in _obj3 {
-									_instances.push(_hotkey), _hotkey[_method].call(_hotkey)
-								}
-						}
+				for _hkType, _obj1 in Hotkey[_device] {
+					for _hkTitle, _obj2 in _obj1 {
+						Hotkey.setContext(_hkType, _hkTitle)
+							for _, _hotkey in _obj2 {
+								_instances.push(_hotkey), _hotkey[_method].call(_hotkey)
+							}
 					}
 				}
 			}
