@@ -87,7 +87,8 @@
 	}
 	deactivate() {
 	if (WinActive(this.AHKID))
-		SendInput, {Alt Down}{Esc}{ALt Up}
+		; SendInput, {Alt Down}{Esc}{ALt Up}
+		SendInput, !{Esc}
 	}
 	hide() {
 	GUI, % this.HWND . ":Hide"
