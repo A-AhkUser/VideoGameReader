@@ -165,7 +165,7 @@ static _b := (_bs:=new JSONData.DataTypes.Object).isBackSpace := true
 			for _direction, _oDirection in _o
 				new Hotkey(_direction, ObjBindMethod(this, "_keyboardButtonsShiftFocus", _oDirection*))
 			new Hotkey("Enter", ObjBindMethod(this, "__keyPress"))
-			, new Hotkey(_khk.submitEvent, ObjBindMethod(this, "__submit", true, true))
+			, new Hotkey(_khk.submitEvent, ObjBindMethod(this, "__submit", this.noHideOnSubmit, true))
 			, new Hotkey(_khk.inputShiftCaretPosition_L, ObjBindMethod(_autocomplete, "shiftCaretPosition", -1))
 			, new Hotkey(_khk.inputShiftCaretPosition_R, ObjBindMethod(_autocomplete, "shiftCaretPosition", 1))
 			, new Hotkey(_khk.autocompleteMenuSet_U, ObjBindMethod(_autocomplete, "menuSetSelection", -1))
@@ -207,7 +207,7 @@ static _b := (_bs:=new JSONData.DataTypes.Object).isBackSpace := true
 			Hotkey.deleteAll("Keypad_joystick"), Hotkey.setGroup("Keypad_joystick"), _jhk := _hotkeys.joystick
 			Hotkey.setContext("IfWinActive", this.GUI.AHKID)
 				(new Hotkey(_jhk.keyPressEvent, ObjBindMethod(this, "__keyPress"))).ITERATOR_DELAY := 550
-				new Hotkey(_jhk.submitEvent, ObjBindMethod(this, "__submit", true, true))
+				new Hotkey(_jhk.submitEvent, ObjBindMethod(this, "__submit", this.noHideOnSubmit, true))
 				, new Hotkey(_jhk.inputShiftCaretPosition_L, ObjBindMethod(_autocomplete, "shiftCaretPosition", -1))
 				, new Hotkey(_jhk.inputShiftCaretPosition_R, ObjBindMethod(_autocomplete, "shiftCaretPosition", 1))
 				, new Hotkey(_jhk.autocompleteMenuSet_U, ObjBindMethod(_autocomplete, "menuSetSelection", -1))
@@ -304,7 +304,7 @@ Keypad_submitEvent(this, _nohide:=false, _prm:=true) {
 	if not (this.GUI.visible)
 		return
 	_autocomplete := this.GUI.controls["Autocomplete_1"]
-	_v := _autocomplete.get(), _autocomplete.set()
+	_v := _autocomplete.get(), _autocomplete.set(), _autocomplete.menu.set("", this.GUI.delimiter)
 	if not (_nohide)
 		this.__display()
 
