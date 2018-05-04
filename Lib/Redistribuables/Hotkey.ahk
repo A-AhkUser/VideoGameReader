@@ -146,9 +146,6 @@
 		} else Hotkey._group := ""
 
 	}
-	hasGroup(_group) {
-	return (Hotkey.hasKey("G_" . _group))
-	}
 
 	setContext(_type:="IfWinActive", _winTitle:="A") {
 
