@@ -11,7 +11,7 @@
 		style: "",
 		setLayout: Func("Keypad_setLayout"),
 		_setLayer: Func("Keypad_setLayer"),
-		lastFoundControl: "",
+		lastFoundControl: {HWND: ""},
 		activationContext: {
 			type: "IfWinNotActive",
 			title: "ahk_group Keypad"
@@ -239,7 +239,7 @@ Keypad_displayEvent(this, _boolean:="") {
 			ControlGetFocus, _focusedControl, A
 			ControlGet, _ID, Hwnd,, % _focusedControl, A
 			ControlGet, _lineCount, LineCount,,, % (_AHKID:="ahk_id " . _ID)
-			this.lastFoundControl := (_lineCount) ? {HWND: _ID, AHKID: _AHKID} : ""
+			this.lastFoundControl.HWND := (_lineCount) ? _ID : ""
 			this.GUI.setTransparency(this.GUITransparency) ; , this.backgroundLayer.setTransparency(this.backgroundLayerTransparency)
 			this.GUI.activate()
 			_jInput := this.jInput
