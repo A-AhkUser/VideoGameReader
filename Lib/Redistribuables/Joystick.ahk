@@ -111,8 +111,8 @@
 			set {
 				if (_axis = "") {
 					if (value)
-						this._keyToHoldDown := StrSplit("Left|Right|Down|Up", "|")
-					else this._keyToHoldDown := StrSplit("Right|Left|Up|Down", "|")
+						this._keyToHoldDown := StrSplit("Right|Left|Up|Down", "|")
+					else this._keyToHoldDown := StrSplit("Left|Right|Down|Up", "|")
 				} else if (_axis = 1) {
 					if (value)
 						this._keyToHoldDown.1 := "Right", this._keyToHoldDown.2 := "Left"
