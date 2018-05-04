@@ -41,15 +41,16 @@
 		}
 	}
 	onConnection(_callback) {
-	if not (Bound.Func._isCallableObject(_callback))
-		return !ErrorLevel:=1
-	return !ErrorLevel:=0, this.__connection:=_callback
+	return Joystick._setCallback(this, "__connection", _callback)
 	}
 	onDisconnected(_callback) {
-	if not (Bound.Func._isCallableObject(_callback))
-		return !ErrorLevel:=1
-	return !ErrorLevel:=0, this.__disconnected:=_callback
+	return Joystick._setCallback(this, "__disconnected", _callback)
 	}
+		_setCallback(_o, _eventName, _callback) {
+		if not (Bound.Func._isCallableObject(_callback))
+			return !ErrorLevel:=1
+		return !ErrorLevel:=0, _o[_eventName]:=_callback
+		}
 
 		dispose() {
 		for _axis, _thumbstick in this.thumbsticks
@@ -66,6 +67,10 @@
 
 		__New(_device, _params*) {
 		this.device := _device, this.watcher := new Bound.Func.Iterator(this, "_spot", _params*)
+		}
+
+		setEventMonitor(_eventMonitor) {
+		return Joystick._setCallback(this, "eventMonitor", _eventMonitor)
 		}
 		watch(_period:="Off") {
 		if (this.eventMonitor)
