@@ -322,7 +322,8 @@ Translation_GUI_ShellEmbedded_1(_GUI, _control, _type:="") {
 		_GUI := Keypad.GUI, _autocomplete := _GUI.controls["Autocomplete_1"]
 		_autocomplete.set("", (_type = 1) ? clipboard : _control.doc.selection.createRange().text)
 		_GUI.activate()
-		ControlSend,, {End}{Pgdn}{End}, % _autocomplete.AHKID
+		SendMessage, 0xB1, 0, -1,, % _autocomplete.AHKID ; EM_SETSEL (https://msdn.microsoft.com/en-us/library/windows/desktop/bb761661(v=vs.85).aspx)
+		_autocomplete.shiftCaretPosition()
 	}
 
 }
