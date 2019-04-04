@@ -1,4 +1,4 @@
-# Video Game Reader
+# Video Game Reader [*outdated*]
 
 Video Game Reader is a script (desktop automation) providing a basic translation/game guide system, integrated into the emulation. It focuses on ease of use when involving such ressources while playing video games.
 
